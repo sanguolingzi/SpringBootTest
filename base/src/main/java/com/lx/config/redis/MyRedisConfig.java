@@ -14,7 +14,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import redis.clients.jedis.JedisPoolConfig;
 
-@Configuration
+//@Configuration
 public class MyRedisConfig {
 		
 	private static Logger logger = Logger.getLogger(MyRedisConfig.class);  

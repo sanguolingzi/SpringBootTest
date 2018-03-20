@@ -20,8 +20,8 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
  * 1）创建数据源
  * 2）创建SqlSessionFactory
  */
-@Configuration    //该注解类似于spring配置文件
-@MapperScan(basePackages="**.mapper")
+//@Configuration    //该注解类似于spring配置文件
+//@MapperScan(basePackages="**.mapper")
 public class MyBatiesConfig {
     
     @Autowired
@@ -35,10 +35,10 @@ public class MyBatiesConfig {
     //@Primary
     public DataSource getDataSource() throws Exception{
         Properties props = new Properties();
-        props.put("driverClassName", env.getProperty("jdbc.driverClassName"));
-        props.put("url", env.getProperty("jdbc.url"));
-        props.put("username", env.getProperty("jdbc.username"));
-        props.put("password", env.getProperty("jdbc.password"));
+        props.put("driverClassName", env.getProperty("spring.datasource.driverClassName"));
+        props.put("url", env.getProperty("spring.datasource.url"));
+        props.put("username", env.getProperty("spring.datasource.username"));
+        props.put("password", env.getProperty("spring.datasource.password"));
         
         props.put("initialSize", "2"); //初始化时建立物理连接的个数
         props.put("maxActive", "20"); //最大连接池数量
