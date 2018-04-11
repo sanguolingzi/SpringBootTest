@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE urlrewrite
+        PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+        "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+
+<urlrewrite>
+
+    <!--<rule>
+        <from>^/customer/(*)$</from>
+        <to type="redirect">/very/newdir/$1</to>
+    </rule>-->
+
+    <rule match-type="wildcard">
+        <from>/user/**</from><!-- 匹配/user/后的所有内容，并赋值到$1 -->
+        <to type="forward">/customer/${replace:$1:/:_}</to><!-- $为替换之前匹配的值 -->
+    </rule>
+
+</urlrewrite>

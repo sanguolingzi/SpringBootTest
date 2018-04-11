@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yinhetianze.business.customer.mapper.busi.BusiCustomerBankrollMapper">
+
+
+
+    <update id="updateBankrollAmount" parameterType="java.util.Map">
+        update busi_customer_bankroll
+        set amount = amount<choose><when test="flowType == 1 "> - </when><otherwise> + </otherwise></choose> #{amount}
+        where id=#{id} and amount = #{oldAmount}
+        and amount - #{amount} >= 0
+    </update>
+
+    <update id="updateBankrollIntegral" parameterType="java.util.Map">
+        update busi_customer_bankroll
+        set integral = integral<choose><when test="flowType == 1 "> - </when><otherwise> + </otherwise></choose> #{integral}
+        where id=#{id} and integral = #{oldIntegral}
+        and integral-#{integral} >= 0
+    </update>
+
+    <update id="updateBankrollStarCoin" parameterType="java.util.Map">
+        update busi_customer_bankroll
+        set star_coin = star_coin <choose><when test="flowType == 1 "> - </when><otherwise> + </otherwise></choose> #{starCoin}
+        where id=#{id} and star_coin = #{oldStarCoin}
+        and star_coin - #{star_coin} >= 0
+    </update>
+</mapper>

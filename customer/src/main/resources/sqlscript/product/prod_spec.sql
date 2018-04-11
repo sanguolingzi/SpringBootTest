@@ -1,0 +1,8 @@
+
+DROP TABLE IF EXISTS prod_specification;
+CREATE TABLE prod_specification(
+    spec_id INT AUTO_INCREMENT PRIMARY KEY,
+    spec_name VARCHAR(50) NOT NULL COMMENT '规格名称',
+    state TINYINT(2) UNSIGNED ZEROFILL DEFAULT 1 COMMENT '是否生效，是否显示，0失效，1生效，默认1生效',
+    create_date DATETIME DEFAULT CURRENT_TIMESTAMP
+)ENGINE = INNODB DEFAULT CHARSET utf8 COMMENT '商品规格表';

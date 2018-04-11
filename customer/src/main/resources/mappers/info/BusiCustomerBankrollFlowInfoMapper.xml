@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yinhetianze.business.customer.mapper.info.BusiCustomerBankrollFlowInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yinhetianze.pojo.customer.BusiCustomerBankrollFlowPojo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="flow_category" jdbcType="SMALLINT" property="flowCategory" />
+    <result column="flow_type" jdbcType="SMALLINT" property="flowType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="flow_number" jdbcType="VARCHAR" property="flowNumber" />
+    <result column="flow_description" jdbcType="SMALLINT" property="flowDescription" />
+    <result column="del_flag" jdbcType="SMALLINT" property="delFlag" />
+    <result column="bankroll_id" jdbcType="INTEGER" property="bankrollId" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, flow_category, flow_type, create_time, amount, flow_number, flow_description,
+    del_flag, bankroll_id
+  </sql>
+
+  <select id="selectList" resultType="com.yinhetianze.business.customer.model.BusiCustomerBankrollFlowModel"
+          parameterType="java.util.Map" >
+    select
+          flow_category "flowCategory",
+          flow_type "flowType",
+          create_time "createTime",
+          amount,
+          flow_number "flowNumber",
+          flow_description "flowDescription"
+    from busi_customer_bankroll_flow
+    where bankroll_id=#{bankrollId}
+    and del_flag = 0
+    <if test="flowCategory != null">
+      and flow_category = #{flowCategory}
+    </if>
+
+    <if test="flowType != null">
+      and flow_type = #{flowType}
+    </if>
+
+    <if test="flowNumber != null">
+      and flow_number like '%${flowNumber}%'
+    </if>
+
+    <!--根据时间段来查询 -->
+    order by create_time desc
+  </select>
+
+
+</mapper>

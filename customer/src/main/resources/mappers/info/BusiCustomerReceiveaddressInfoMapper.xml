@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yinhetianze.business.customer.mapper.info.BusiCustomerReceiveaddressInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yinhetianze.pojo.customer.BusiCustomerReceiveaddressPojo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="area_county" jdbcType="VARCHAR" property="areaCounty" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="post_code" jdbcType="VARCHAR" property="postCode" />
+    <result column="customer_id" jdbcType="INTEGER" property="customerId" />
+    <result column="del_flag" jdbcType="SMALLINT" property="delFlag" />
+    <result column="default_status" jdbcType="SMALLINT" property="defaultStatus" />
+      <result column="region_location" jdbcType="VARCHAR" property="regionLocation" />
+
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, phone, city, area_county, address, post_code, customer_id, del_flag,
+    default_status,region_location
+  </sql>
+
+  <select id="selectByCustomerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select
+          <include refid="Base_Column_List"/>
+      from busi_customer_receiveaddress
+      where del_flag = 0
+      and customer_id = #{customerId}
+      order by default_status asc
+  </select>
+</mapper>

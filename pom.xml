@@ -66,9 +66,9 @@
     <modules>
         <module>core</module>
         <module>pojo</module>
-        <!--
-        <module>generator</module>
         <module>customer</module>
+        <module>generator</module>
+        <!--
         <module>shop</module>
         <module>product</module>
         <module>order</module>

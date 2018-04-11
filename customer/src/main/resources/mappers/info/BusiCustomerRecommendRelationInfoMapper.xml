@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yinhetianze.business.customer.mapper.info.BusiCustomerRecommendRelationInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yinhetianze.pojo.customer.BusiCustomerRecommendRelationPojo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="recom_customer_id" jdbcType="INTEGER" property="recomCustomerId" />
+    <result column="recomed_customer_id" jdbcType="INTEGER" property="recomedCustomerId" />
+    <result column="del_flag" jdbcType="SMALLINT" property="delFlag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+
+  <select id="selectRecommendRelationList" parameterType="java.lang.Integer" resultType="com.yinhetianze.pojo.customer.BusiCustomerPojo">
+     select
+        bcrr.create_time,
+        customer.phone,
+        customer.nick_name
+     from busi_customer_recommend_relation bcrr
+     left join busi_customer customer  on bcrr.recomed_customer_id = customer.id
+     where bcrr.recom_customer_id = #{customerId}
+  </select>
+</mapper>

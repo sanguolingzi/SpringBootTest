@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yinhetianze.business.customer.mapper.info.BusiCustomerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yinhetianze.pojo.customer.BusiCustomerPojo">
+  <!--
+    WARNING - @mbg.generated
+  -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="sex" jdbcType="SMALLINT" property="sex" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="INTEGER" property="phone" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="photo_url" jdbcType="VARCHAR" property="photoUrl" />
+    <result column="account_status" jdbcType="SMALLINT" property="accountStatus" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="login_password" jdbcType="VARCHAR" property="loginPassword" />
+    <result column="pay_password" jdbcType="VARCHAR" property="payPassword" />
+    <result column="cancel_status" jdbcType="SMALLINT" property="cancelStatus" />
+    <result column="person_qrcode" jdbcType="VARCHAR" property="personQrcode" />
+    <result column="del_flag" property="delFlag" jdbcType="SMALLINT" />
+</resultMap>
+
+
+  <sql id="Base_Column_List" >
+    id, account, nick_name, sex, email, phone, create_time, photo_url, account_status,
+    id_card, login_password, pay_password, cancel_status, person_qrcode, del_flag
+  </sql>
+</mapper>

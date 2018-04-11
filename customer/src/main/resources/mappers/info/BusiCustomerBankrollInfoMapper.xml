@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yinhetianze.business.customer.mapper.info.BusiCustomerBankrollInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yinhetianze.pojo.customer.BusiCustomerBankrollPojo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="integral" jdbcType="DECIMAL" property="integral" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="star_coin" jdbcType="DECIMAL" property="starCoin" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="customer_id" jdbcType="INTEGER" property="customerId" />
+    <result column="del_flag" jdbcType="SMALLINT" property="delFlag" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, integral, amount, create_time, update_time, customer_id, del_flag,star_coin
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from busi_customer_bankroll
+    where id = #{id,jdbcType=INTEGER}
+    and del_flag = 0
+  </select>
+
+  <select id="selectByCustomerId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from busi_customer_bankroll
+    where customer_id = #{customerId,jdbcType=INTEGER}
+    and del_flag = 0
+  </select>
+</mapper>
