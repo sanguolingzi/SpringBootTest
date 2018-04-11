@@ -1,0 +1,13 @@
+com\yinhetianze\pojo\customer\BusiCustomerLoginlogPojo.class
+com\yinhetianze\pojo\shop\BusiShopDrawrecordPojo.class
+com\yinhetianze\pojo\BasicPojo.class
+com\yinhetianze\pojo\customer\BusiCustomerRecommendRelationPojo.class
+com\yinhetianze\pojo\customer\BusiCustomerBankrollFlowPojo.class
+com\yinhetianze\pojo\customer\CustomerPojo.class
+com\yinhetianze\pojo\shop\BusiShopPojo.class
+com\yinhetianze\pojo\shop\BusiShopBankrollPojo.class
+com\yinhetianze\pojo\shop\BusiShopBankrollFlowPojo.class
+com\yinhetianze\pojo\customer\BusiCustomerBankrollPojo.class
+com\yinhetianze\pojo\shop\BusiShopCompanyPojo.class
+com\yinhetianze\pojo\customer\BusiCustomerReceiveaddressPojo.class
+com\yinhetianze\pojo\customer\BusiCustomerPojo.class

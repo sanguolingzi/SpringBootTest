@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true" 
+    dynamicConfig="true" monitoring="autodetect">   -->
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"    
+    monitoring="autodetect" dynamicConfig="true"  
+    >
+    <diskStore path="java.io.tmpdir"/>
+    <!-- 默认缓存 -->
+    <defaultCache 
+        maxElementsInMemory="10000" 
+        eternal="false" 
+        timeToIdleSeconds="120" 
+        timeToLiveSeconds="120" 
+        overflowToDisk="true" 
+        maxElementsOnDisk="10000000" 
+        diskPersistent="false" 
+        diskExpiryThreadIntervalSeconds="120" 
+        memoryStoreEvictionPolicy="LRU" 
+        /> 
+             
+     <!-- 公共业务数据库查询缓存, 数据有限时间存储，过期消除 -->
+    <cache name="busiCache" 
+        maxElementsInMemory="10000" 
+        eternal="false" 
+        timeToIdleSeconds="120" 
+        timeToLiveSeconds="300" 
+        overflowToDisk="false" 
+        maxElementsOnDisk="10000000" 
+        diskPersistent="false" 
+        diskExpiryThreadIntervalSeconds="120" 
+        memoryStoreEvictionPolicy="LRU" 
+        />
+        
+    <!-- 系统数据缓存，数据随应用启动永久存储，应用结束消除 -->
+    <cache name="sysCache" 
+        maxElementsInMemory="10000" 
+        eternal="true" 
+        overflowToDisk="false" 
+        diskPersistent="false" 
+        memoryStoreEvictionPolicy="LRU" 
+        />
+        
+    <!-- WQB商品（产品）分类数据缓存 -->
+    <cache name="productTypeCache" 
+        maxElementsInMemory="10000" 
+        eternal="false" 
+        timeToIdleSeconds="120" 
+        timeToLiveSeconds="300" 
+        overflowToDisk="false" 
+        maxElementsOnDisk="10000000" 
+        diskPersistent="false" 
+        diskExpiryThreadIntervalSeconds="120" 
+        memoryStoreEvictionPolicy="LRU" 
+        /> 
+        
+    <!-- WQB商品（产品）数据缓存 -->
+    <cache name="productCache" 
+        maxElementsInMemory="10000" 
+        eternal="false" 
+        timeToIdleSeconds="120" 
+        timeToLiveSeconds="300" 
+        overflowToDisk="false" 
+        maxElementsOnDisk="10000000" 
+        diskPersistent="false" 
+        diskExpiryThreadIntervalSeconds="120" 
+        memoryStoreEvictionPolicy="LRU" 
+        /> 
+        
+	<!-- 系统活动会话缓存 -->
+    <cache name="activeSessionsCache" 
+    	maxEntriesLocalHeap="10000" 
+    	eternal="true" 
+    	overflowToDisk="true"
+		diskPersistent="true" 
+		diskExpiryThreadIntervalSeconds="600" 
+		statistics="true"/>
+    
+</ehcache>
