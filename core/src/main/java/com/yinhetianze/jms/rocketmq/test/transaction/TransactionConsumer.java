@@ -1,11 +1,12 @@
-package com.yinhetianze.jms.rocketmq.test.normal;
+package com.yinhetianze.jms.rocketmq.test.transaction;
 
 import com.alibaba.rocketmq.client.consumer.DefaultMQPushConsumer;
-import com.alibaba.rocketmq.client.consumer.listener.*;
+import com.alibaba.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
+import com.alibaba.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
+import com.alibaba.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import com.alibaba.rocketmq.client.exception.MQClientException;
 import com.alibaba.rocketmq.common.consumer.ConsumeFromWhere;
 import com.alibaba.rocketmq.common.message.MessageExt;
-import com.alibaba.rocketmq.common.protocol.heartbeat.MessageModel;
 
 import java.util.List;
 
@@ -17,10 +18,10 @@ import java.util.List;
 /**
  * RocketMq消费组信息我们都会再正式提交代码前告知选手
  */
-public class Consumer {
+public class TransactionConsumer {
 
     public static void main(String[] args) throws InterruptedException, MQClientException {
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("consumer");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("transactionConsumer");
         /**
          * 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费<br>
          * 如果非第一次启动，那么按照上次消费的位置继续消费
@@ -28,7 +29,7 @@ public class Consumer {
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         //在本地搭建好broker后,记得指定nameServer的地址
         consumer.setNamesrvAddr("127.0.0.1:9876");
-        consumer.subscribe("test", "*");
+        consumer.subscribe("transaction", "*");
         //设置消费一次抓取多少消息
         consumer.setConsumeMessageBatchMaxSize(10);
         //广播模式
