@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yinhetianze.security.custom.userdetails.mapper.IntfPatternInfoMapper">
+
+  <sql id="selectColumnSql">
+    pattern,
+    module,
+    permission,
+    status,
+    create_time createTime
+  </sql>
+
+  <select id="findIntfPattern" parameterType="string" resultType="map">
+    select
+      <include refid="selectColumnSql"/>
+    FROM
+      busi_sys_intf_pattern
+    WHERE
+      pattern = #{pattern}
+  </select>
+
+  <select id="getIntfPattern" parameterType="map" resultType="map">
+    select
+      <include refid="selectColumnSql"/>
+    FROM
+      busi_sys_intf_pattern
+    <where>
+      <if test="pattern != null and pattern !=''">
+        pattern like concat('%', #{pattern}, '%')
+      </if>
+      <if test="module != null and module !=''">
+        and module like concat('%', #{module}, '%')
+      </if>
+      <if test="permission != null and permission !=''">
+        and permission like concat('%', #{permission}, '%')
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+    </where>
+  </select>
+
+  <select id="getIntfPatternRes" parameterType="java.util.HashSet" resultType="map">
+    select
+      <include refid="selectColumnSql"/>
+    FROM
+      busi_sys_intf_pattern
+    <if test="collection != null">
+      WHERE
+        permission in
+      <foreach collection="collection" open="(" close=")" separator="," item="perm">
+        ${perm}
+      </foreach>
+    </if>
+  </select>
+
+</mapper>

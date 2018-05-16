@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yinhetianze.common.business.sys.channel.mapper.SysChannelInfoMapper">
+
+  <sql id="selectColumnSql">
+    channel_code channelCode,
+    channel_secret channelSecret,
+    channel_name channelName,
+    status,
+    create_time createTime
+  </sql>
+
+  <select id="findChannelInfo" parameterType="string" resultType="map">
+    select
+      <include refid="selectColumnSql"/>
+    FROM
+      busi_sys_channel
+    WHERE
+      channel_code = #{channelCode}
+  </select>
+
+  <select id="getChannelInfoList" parameterType="map" resultType="map">
+    select
+      <include refid="selectColumnSql"/>
+    FROM
+      busi_sys_channel
+    <where>
+      <if test="channelCode != null and channelCode !=''">
+        channelCode = #{channelCode}
+      </if>
+      <if test="channelName != null and channelName !=''">
+        and channelName like concat('%', #{channelName}, '%')
+      </if>
+      <if test="status != null">
+        and status = #{status}
+      </if>
+    </where>
+  </select>
+
+</mapper>

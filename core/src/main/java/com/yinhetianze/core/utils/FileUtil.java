@@ -1,5 +1,6 @@
 package com.yinhetianze.core.utils;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.BufferedReader;
@@ -9,7 +10,7 @@ import java.io.FileWriter;
 
 public class FileUtil
 {
-
+    private static String allowedFileType="jpg,png";
     /**
      * 将content写入到指定的fileName文件中
      * 
@@ -262,6 +263,85 @@ public class FileUtil
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * 上传文件，由springBoot的StandardMultipartHttpServletRequest.StandardMultipartFile 处理
+     * @param multipartFile 文件对象
+     * @param dir 文件保存目录(仅文件路径)
+     * @param storeFileName 保存的文件名字(不包含文件路径)
+     * @throws Exception
+     */
+    public static File uploadFile(MultipartFile multipartFile, String dir, String storeFileName) throws Exception
+    {
+        if (CommonUtil.isNotEmpty(storeFileName)
+                && CommonUtil.isNotEmpty(multipartFile))
+        {
+            int index = storeFileName.lastIndexOf(".");
+            if (index > -1)
+            {
+                // 文件类型校验
+//                String allowedFileType = SysConfigUtil.getConfig("upload_file_type_allowed"); // 配置的文件可上传类型
+                //String allowedFileType = "";
+                String storeFileExt = storeFileName.substring(index);
+                if (CommonUtil.isEmpty(allowedFileType))
+                {
+                    LoggerUtil.info(FileUtil.class, "没有配置任何可以上传的文件类型");
+                }
+                else
+                {
+                    String[] types = allowedFileType.split(",");
+                    boolean isAllowed = false;
+                    String temp = "";
+                    for (String ext : types)
+                    {
+                        temp = (ext.indexOf(".") != 0 ? "."+ext : ext).toLowerCase();
+                        // 配置的文件拓展名不是以.开头，则拼上.后再与storeFileExt进行比较是否相同
+                        if (temp.equals(storeFileExt.toLowerCase()))
+                        {
+                            isAllowed = true;
+                            break;
+                        }
+                    }
+                    if (!isAllowed)
+                    {
+                        throw new Exception("上传的文件格式不被允许。请检查文件格式是否是："+allowedFileType);
+                    }
+                }
+            }
+            else
+            {
+                LoggerUtil.warn(FileUtil.class, "文件格式不正确或者配置路径不正确。文件：{}；配置路径：{}", new String[]{storeFileName, dir});
+                throw new Exception("文件格式不正确。请检查文件格式");
+            }
+
+            StringBuffer targetFileName = new StringBuffer();
+            // 创建文件路径
+            if (CommonUtil.isNotEmpty(dir))
+            {
+                File storeDir = new File(dir);
+                if (!storeDir.exists())
+                {
+                    storeDir.mkdirs();
+                }
+                targetFileName.append(storeDir.getAbsolutePath());
+            }
+
+            // 最终文件保存路径
+            if (!(targetFileName.indexOf("/") == targetFileName.length() - 1)
+                    && !(targetFileName.indexOf("\\") == targetFileName.length() - 1))
+            {
+                targetFileName.append(File.separator);
+            }
+            targetFileName.append(storeFileName);
+
+            File file = new File(targetFileName.toString());
+
+            multipartFile.transferTo(file);
+            return file;
+        }
+        return null;
     }
 
     /**
