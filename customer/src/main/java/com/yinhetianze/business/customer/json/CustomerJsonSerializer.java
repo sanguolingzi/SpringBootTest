@@ -1,23 +1,13 @@
 package com.yinhetianze.business.customer.json;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.yinhetianze.business.customer.json.filter.JSONFilter;
 
 public class CustomerJsonSerializer {
-    static final String DYNC_INCLUDE = "DYNC_INCLUDE";
-    static final String DYNC_FILTER = "DYNC_FILTER";
     ObjectMapper mapper = new ObjectMapper();
+    JSONFilter jsonFilter = new JSONFilter();
 
-    @JsonFilter(DYNC_FILTER)
-    interface DynamicFilter {
-    }
-
-    @JsonFilter(DYNC_INCLUDE)
-    interface DynamicInclude {
-    }
 
     /**
      * @param clazz 需要设置规则的Class
@@ -27,17 +17,15 @@ public class CustomerJsonSerializer {
     public void filter(Class<?> clazz, String include, String filter) {
         if (clazz == null) return;
         if (include != null && include.length() > 0) {
-            mapper.setFilterProvider(new SimpleFilterProvider().addFilter(DYNC_INCLUDE,
-                    SimpleBeanPropertyFilter.filterOutAllExcept(include.split(","))));
-            mapper.addMixIn(clazz, DynamicInclude.class);
+            jsonFilter.include(clazz,include.split(","));
         } else if (filter !=null && filter.length() > 0) {
-            mapper.setFilterProvider(new SimpleFilterProvider().addFilter(DYNC_FILTER,
-                    SimpleBeanPropertyFilter.serializeAllExcept(filter.split(","))));
-            mapper.addMixIn(clazz, DynamicFilter.class);
+            jsonFilter.filter(clazz,filter.split(","));
         }
+        mapper.addMixIn(clazz, JSONFilter.class);
     }
 
     public String toJson(Object object) throws JsonProcessingException {
+        mapper.setFilterProvider(jsonFilter);
         return mapper.writeValueAsString(object);
     }
 }

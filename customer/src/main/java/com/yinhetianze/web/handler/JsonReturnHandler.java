@@ -2,6 +2,7 @@ package com.yinhetianze.web.handler;
 
 import com.yinhetianze.configurations.annotation.JSON;
 import com.yinhetianze.business.customer.json.CustomerJsonSerializer;
+import com.yinhetianze.configurations.annotation.JSONS;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
@@ -43,6 +44,11 @@ public class JsonReturnHandler implements  HandlerMethodReturnValueHandler {
             if (a instanceof JSON) {
                 JSON json = (JSON) a;
                 jsonSerializer.filter(json.type(), json.include(), json.filter());
+            }else if(a instanceof JSONS){
+                JSONS jsons = (JSONS)a;
+                for(JSON json:jsons.value()){
+                    jsonSerializer.filter(json.type(), json.include(), json.filter());
+                }
             }
         });
 
